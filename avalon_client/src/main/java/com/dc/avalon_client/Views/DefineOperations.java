@@ -5,21 +5,69 @@
  */
 package com.dc.avalon_client.Views;
 
+import com.dc.avalon_client.FileHandler.Field;
+import com.dc.avalon_client.FileHandler.Handler;
+import com.dc.avalon_client.FileHandler.Header;
+import java.awt.Toolkit;
+import java.util.Vector;
+import java.util.Iterator;
+import java.util.Map;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author lucas
  */
 public class DefineOperations extends javax.swing.JFrame
 {
-
+    private Handler handler;
+    private static DefaultTableModel tableModel;
+    
+    public void setHandler(Handler handler)
+    {
+        this.handler = handler;
+    }
+    
     /**
      * Creates new form DefineOperations
      */
     public DefineOperations()
-    {
+    {        
         initComponents();
     }
 
+    public DefineOperations(Handler handler)
+    {
+        this.handler = handler;
+        tableModel = this.getInitialTableModel();
+        initComponents();
+        tblOperations.setModel(tableModel);
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getClassLoader().getResource("avalon_logo.png")));
+        this.setLocationRelativeTo(null);
+    }
+    
+    /*
+    * get initial table model from the fields of the previus select file
+    */   
+    public DefaultTableModel getInitialTableModel()
+    {         
+        Header header = this.handler.getArchive().getHeader();
+        if(header == null){
+            return new DefaultTableModel();
+        }
+        
+        Vector columns = new Vector();
+        System.out.println("DefaultTableModel");
+        for (Iterator it = header.getFields().entrySet().iterator(); it.hasNext();) {
+            Map.Entry<String, Field> entry = (Map.Entry<String, Field>) it.next();
+                
+            System.out.println("Key" + entry.getKey() + " / Value:" + entry.getValue().getName());
+            columns.add(entry.getValue().getName());
+        }
+        
+        return new DefaultTableModel(columns, 0);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,21 +78,127 @@ public class DefineOperations extends javax.swing.JFrame
     private void initComponents()
     {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        srpOperations = new javax.swing.JScrollPane();
+        tblOperations = new javax.swing.JTable();
+        lblField = new javax.swing.JLabel();
+        cmbField = new javax.swing.JComboBox<>();
+        lblOperation = new javax.swing.JLabel();
+        cmbOperation = new javax.swing.JComboBox<>();
+        lblOperationValue = new javax.swing.JLabel();
+        txtOperationValue = new javax.swing.JTextField();
+        btnAddOperation = new javax.swing.JButton();
+        btnCleanOperations = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Operações");
+        setResizable(false);
+
+        tblOperations.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][]
+            {
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
+            },
+            new String []
+            {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9", "Title 10"
+            }
+        ));
+        tblOperations.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tblOperations.setAutoscrolls(false);
+        tblOperations.setEnabled(false);
+        tblOperations.setMinimumSize(new java.awt.Dimension(170, 70));
+        tblOperations.setRowHeight(20);
+        tblOperations.getTableHeader().setReorderingAllowed(false);
+        srpOperations.setViewportView(tblOperations);
+
+        lblField.setText("Campo");
+
+        cmbField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "nome", "sobrenome", "email", "telefone", "apelido", "CPF", "nascimento", "sexo", "n_itens" }));
+
+        lblOperation.setText("Operação");
+
+        cmbOperation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aplicar mascara", "Remover acentos", "Remover dígitos", "Remover caracteres especiais", "Remover palavra duplicada", "Aplicar expressão regular", "Substituir palavra", "Definir valor padrão", "Validar e-mail", "Validar texto", "Validar número", "Validar data" }));
+        cmbOperation.setPreferredSize(new java.awt.Dimension(300, 24));
+
+        lblOperationValue.setText("Valor para Operação");
+
+        btnAddOperation.setText("Adicionar");
+        btnAddOperation.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnAddOperationActionPerformed(evt);
+            }
+        });
+
+        btnCleanOperations.setLabel("Limpar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 743, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnCleanOperations, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAddOperation, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(srpOperations, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 719, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblField)
+                            .addComponent(cmbField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(47, 47, 47)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblOperation)
+                            .addComponent(lblOperationValue)
+                            .addComponent(txtOperationValue)
+                            .addComponent(cmbOperation, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 427, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblField)
+                    .addComponent(lblOperation))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbOperation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(lblOperationValue)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtOperationValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addComponent(srpOperations, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAddOperation, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                    .addComponent(btnCleanOperations, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAddOperationActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAddOperationActionPerformed
+    {//GEN-HEADEREND:event_btnAddOperationActionPerformed
+        String value = this.txtOperationValue.getText();
+        String operation = (String)this.cmbOperation.getSelectedItem();
+        
+        System.out.println("Operation value" + value);
+        System.out.println("Operation type"  + operation);
+    }//GEN-LAST:event_btnAddOperationActionPerformed
 
     /**
      * @param args the command line arguments
@@ -85,5 +239,15 @@ public class DefineOperations extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddOperation;
+    private javax.swing.JButton btnCleanOperations;
+    private javax.swing.JComboBox<String> cmbField;
+    private javax.swing.JComboBox<String> cmbOperation;
+    private javax.swing.JLabel lblField;
+    private javax.swing.JLabel lblOperation;
+    private javax.swing.JLabel lblOperationValue;
+    private javax.swing.JScrollPane srpOperations;
+    private javax.swing.JTable tblOperations;
+    private javax.swing.JTextField txtOperationValue;
     // End of variables declaration//GEN-END:variables
 }

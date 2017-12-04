@@ -21,26 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.dc.avalon_client.FileHandler;
+package com.dc.avalon_client.Operations;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import com.dc.avalon_client.Definitions.iDefinition;
 
 /**
  *
  * @author lucas
  */
-public class Header
+public class RemoveSpecialCharacters extends Operation implements iOperation 
 {
-    private LinkedHashMap<String, Field> fields = new LinkedHashMap<>();
-    
-    public void addField(String key, Field field)
+
+    public RemoveSpecialCharacters(String name, iDefinition definition)
     {
-        this.fields.put(key, field);
+        super(name, definition);
     }
     
-    public Map getFields()
+    @Override
+    public void execute()
     {
-        return this.fields;
+        
     }
 }

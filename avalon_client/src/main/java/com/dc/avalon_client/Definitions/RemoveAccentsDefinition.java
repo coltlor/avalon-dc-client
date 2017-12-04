@@ -21,26 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.dc.avalon_client.FileHandler;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
+package com.dc.avalon_client.Definitions;
 
 /**
  *
  * @author lucas
  */
-public class Header
+public class RemoveAccentsDefinition implements iDefinition
 {
-    private LinkedHashMap<String, Field> fields = new LinkedHashMap<>();
-    
-    public void addField(String key, Field field)
+
+    @Override
+    public Object getDefinition()
     {
-        this.fields.put(key, field);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public Map getFields()
-    {
-        return this.fields;
-    }
 }

@@ -5,6 +5,8 @@
  */
 package com.dc.avalon_client.Views;
 
+import java.awt.Toolkit;
+
 /**
  *
  * @author lucas
@@ -18,6 +20,8 @@ public class DefineOptions extends javax.swing.JFrame
     public DefineOptions()
     {
         initComponents();
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getClassLoader().getResource("avalon_logo.png")));
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -33,8 +37,9 @@ public class DefineOptions extends javax.swing.JFrame
         lblServerUrl = new javax.swing.JLabel();
         txtServerUrl = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Opções");
+        setResizable(false);
 
         lblServerUrl.setText("Server URL:");
 

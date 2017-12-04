@@ -18,6 +18,7 @@ public class RegexDefinition implements iDefinition
         this.regex = definition;
     }
     
+    @Override
     public Object getDefinition()
     {
         return regex;

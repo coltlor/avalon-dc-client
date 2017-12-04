@@ -15,7 +15,7 @@ public class Archive
 {
     private String id;
     private File file;
-    private Header header;
+    private Header header = null;
     
     public Archive(String id)
     {
@@ -31,9 +31,19 @@ public class Archive
         return id;
     }
     
+    public void setFile(File file)
+    {
+        this.file = file;
+    }
+    
     public void setHeader(Header header)
     {
         this.header = header;
+    }
+    
+    public Header getHeader()
+    {
+        return this.header;
     }
     
     

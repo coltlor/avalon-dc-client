@@ -18,6 +18,7 @@ public class DefaultDefinition implements iDefinition
         this.defaultValue = definition;
     }    
     
+    @Override
     public Object getDefinition()
     {
         return defaultValue;

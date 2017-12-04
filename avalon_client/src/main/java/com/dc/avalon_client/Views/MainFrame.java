@@ -6,9 +6,13 @@
 package com.dc.avalon_client.Views;
 
 import com.dc.avalon_client.FileHandler.Archive;
+import com.dc.avalon_client.FileHandler.Field;
 import com.dc.avalon_client.FileHandler.Handler;
 import com.dc.avalon_client.IO.Reader;
+import java.awt.Toolkit;
 import java.io.File;
+import java.util.Iterator;
+import java.util.Map;
 import javax.swing.JFileChooser;
 
 /**
@@ -17,13 +21,19 @@ import javax.swing.JFileChooser;
  */
 public class MainFrame extends javax.swing.JFrame
 {
-
+    private Handler handler;
     /**
      * Creates new form MainFrame
      */
     public MainFrame()
-    {
+    {      
+        this.handler = new Handler();
+        Archive archive = new Archive("TESTE_ID");
+        this.handler.setArchive(archive);
+        
         initComponents();
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getClassLoader().getResource("avalon_logo.png")));
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -36,10 +46,10 @@ public class MainFrame extends javax.swing.JFrame
     private void initComponents()
     {
 
-        selectFile = new javax.swing.JButton();
-        defineOperations = new javax.swing.JButton();
-        defineOptions = new javax.swing.JButton();
-        execute = new javax.swing.JButton();
+        btnSelectFile = new javax.swing.JButton();
+        btnDefineOperations = new javax.swing.JButton();
+        btnDefineOptions = new javax.swing.JButton();
+        btnExecute = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -50,45 +60,46 @@ public class MainFrame extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Avalon");
+        setResizable(false);
 
-        selectFile.setText("Selecionar Arquivo");
-        selectFile.setName("selectFile"); // NOI18N
-        selectFile.addActionListener(new java.awt.event.ActionListener()
+        btnSelectFile.setText("Selecionar Arquivo");
+        btnSelectFile.setName("btnSelectFile"); // NOI18N
+        btnSelectFile.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                selectFileActionPerformed(evt);
+                btnSelectFileActionPerformed(evt);
             }
         });
 
-        defineOperations.setText("Definir operações");
-        defineOperations.setName("defineOperations"); // NOI18N
-        defineOperations.addActionListener(new java.awt.event.ActionListener()
+        btnDefineOperations.setText("Definir operações");
+        btnDefineOperations.setName("btnDefineOperations"); // NOI18N
+        btnDefineOperations.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                defineOperationsActionPerformed(evt);
+                btnDefineOperationsActionPerformed(evt);
             }
         });
 
-        defineOptions.setText("Definir Opções");
-        defineOptions.setToolTipText("");
-        defineOptions.setName("defineOptions"); // NOI18N
-        defineOptions.addActionListener(new java.awt.event.ActionListener()
+        btnDefineOptions.setText("Definir Opções");
+        btnDefineOptions.setToolTipText("");
+        btnDefineOptions.setName("btnDefineOptions"); // NOI18N
+        btnDefineOptions.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                defineOptionsActionPerformed(evt);
+                btnDefineOptionsActionPerformed(evt);
             }
         });
 
-        execute.setText("Executar");
-        execute.setName("execute"); // NOI18N
-        execute.addActionListener(new java.awt.event.ActionListener()
+        btnExecute.setText("Executar");
+        btnExecute.setName("btnExecute"); // NOI18N
+        btnExecute.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                executeActionPerformed(evt);
+                btnExecuteActionPerformed(evt);
             }
         });
 
@@ -117,68 +128,70 @@ public class MainFrame extends javax.swing.JFrame
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(53, 53, 53)
-                .addComponent(selectFile, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
-                .addComponent(defineOperations, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
-                .addComponent(defineOptions, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnExecute, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnSelectFile, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48)
+                        .addComponent(btnDefineOperations, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48)
+                        .addComponent(btnDefineOptions, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(57, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(execute, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(61, 61, 61)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(selectFile, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(defineOperations, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(defineOptions, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnSelectFile, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDefineOperations, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDefineOptions, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addComponent(execute, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnExecute, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void defineOperationsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_defineOperationsActionPerformed
-    {//GEN-HEADEREND:event_defineOperationsActionPerformed
-        new DefineOperations().setVisible(true);
-    }//GEN-LAST:event_defineOperationsActionPerformed
+    private void btnDefineOperationsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnDefineOperationsActionPerformed
+    {//GEN-HEADEREND:event_btnDefineOperationsActionPerformed
+        DefineOperations defineOperationsFrame = new DefineOperations(this.handler);        
+        defineOperationsFrame.setVisible(true);        
+    }//GEN-LAST:event_btnDefineOperationsActionPerformed
 
-    private void executeActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_executeActionPerformed
-    {//GEN-HEADEREND:event_executeActionPerformed
+    private void btnExecuteActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnExecuteActionPerformed
+    {//GEN-HEADEREND:event_btnExecuteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_executeActionPerformed
+    }//GEN-LAST:event_btnExecuteActionPerformed
 
-    private void defineOptionsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_defineOptionsActionPerformed
-    {//GEN-HEADEREND:event_defineOptionsActionPerformed
+    private void btnDefineOptionsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnDefineOptionsActionPerformed
+    {//GEN-HEADEREND:event_btnDefineOptionsActionPerformed
         new DefineOptions().setVisible(true);
-    }//GEN-LAST:event_defineOptionsActionPerformed
+    }//GEN-LAST:event_btnDefineOptionsActionPerformed
 
-    private void selectFileActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_selectFileActionPerformed
-    {//GEN-HEADEREND:event_selectFileActionPerformed
+    private void btnSelectFileActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSelectFileActionPerformed
+    {//GEN-HEADEREND:event_btnSelectFileActionPerformed
         JFileChooser chooser = new JFileChooser();
-        int returnVal = chooser.showOpenDialog(null);
+        int returnVal = chooser.showOpenDialog(this);
         
         if(returnVal == JFileChooser.APPROVE_OPTION){
             File myFile = chooser.getSelectedFile();
             String name = myFile + "";
             System.out.println(name);
             
-            Archive archive = new Archive("TESTE_ID");
-            Handler handler = new Handler();
-            
-            archive.setHeader(handler.getHeader(new Reader(name)));
-            
-            handler.setArchive(archive);
-                        
+            Archive arc = this.handler.getArchive();            
+            arc.setFile(myFile);                        
+            arc.setHeader(this.handler.getHeader(new Reader(name)));
+                                              
+            for (Iterator it = arc.getHeader().getFields().entrySet().iterator(); it.hasNext();) {
+                Map.Entry<String, Field> entry = (Map.Entry<String, Field>) it.next();
+                
+                System.out.println("Key" + entry.getKey() + " / Value:" + entry.getValue().getName());
+            }
         }
         
-    }//GEN-LAST:event_selectFileActionPerformed
+    }//GEN-LAST:event_btnSelectFileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,9 +232,10 @@ public class MainFrame extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton defineOperations;
-    private javax.swing.JButton defineOptions;
-    private javax.swing.JButton execute;
+    private javax.swing.JButton btnDefineOperations;
+    private javax.swing.JButton btnDefineOptions;
+    private javax.swing.JButton btnExecute;
+    private javax.swing.JButton btnSelectFile;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -229,6 +243,5 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JButton selectFile;
     // End of variables declaration//GEN-END:variables
 }

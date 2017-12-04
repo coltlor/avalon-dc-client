@@ -64,4 +64,9 @@ public class Handler
                     
         return header;
     }       
+
+    public Archive getArchive()
+    {
+        return this.archive;
+    }
 }
